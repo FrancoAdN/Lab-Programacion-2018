@@ -5,12 +5,13 @@
 struct posiciones{
   int x;
   int y;
-}pos[10];
+}pos[100];
 
 
 int i=0,j=0;
-int game=0,cambio=0;
-char serpiente[10];
+int numX;numY;
+int game=1,cambio=0;
+char serpiente[100];
 int sizeS=sizeof(serpiente)/sizeof(serpiente[0]);
 int sizeP=sizeof(pos)/sizeof(pos[0]);
 int length = 2;
@@ -25,71 +26,74 @@ void gotoxy(int x,int y){
 
     SetConsoleCursorPosition(hCon,dwPos);
 }
+void ocultarCursor(){
+  HANDLE hCon;
+  hCon= GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO cci;
+  cci.dwSize = 2;
+  cci.bVisible= FALSE;
+  SetConsoleCursorInfo(hCon,&cci);
+}
 
 
 void main(){
+  system("color 3");
+  ocultarCursor();
+  tablero();
+  alimento();
   serpiente[0]='*';
   pos[0].x=10; pos[0].y=10;
   serpiente[1]='*';
   pos[1].x=9; pos[1].y=10;
-  while(!game){
+  while(game){
+     tablero();
     if(kbhit()){
 
       limpiarGotoxy();
-      // gotoxy(numX,numY);printf("*");
+      gotoxy(numX,numY);printf("+");
+
       char tecla=getch();
-      if(tecla == 'a') pos[0].x--;cambio=1;
-      if(tecla == 's') pos[0].y++;cambio=1;
-      if(tecla == 'd') pos[0].x++;cambio=1;
-      if(tecla == 'w') pos[0].y--;cambio=1;
-      if(tecla == 't') serpiente[length]='*';length++;
-
-      if(cambio){
-        if(tecla == 'a'){
-          for(i=1;i<length+1;i++){
-            pos[i].x=pos[i-1].x-1;
-            pos[i].y=pos[i-1].y;
-          }
+      if( tecla == 'w'|| tecla == 'a' || tecla == 's' || tecla == 'd'){
+        for(i=0;i<sizeS;i++){
+          pos[sizeS-i].x=pos[sizeS-i-1].x;
+          pos[sizeS-i].y=pos[sizeS-i-1].y;
         }
-        if(tecla == 'd'){
-          for(i=1;i<length+1;i++){
-            pos[i].x=pos[i-1].x+1;
-            pos[i].y=pos[i-1].y;
-          }
-        }
-        if(tecla == 'w'){
-          for(i=1;i<length+1;i++){
-            pos[i].x=pos[i-1].x;
-            pos[i].y=pos[i-1].y-1;
-          }
-        }
-        if(tecla == 's'){
-          for(i=1;i<length+1;i++){
-            pos[i].x=pos[i-1].x;
-            pos[i].y=pos[i-1].y+1;
-
-          }
-        }
-
-        cambio=0;
       }
+      if(tecla == 'a'){
+        pos[0].x--;
+      }
+      if(tecla == 's'){
+        pos[0].y++;
+      }
+      if(tecla == 'd'){
+        pos[0].x++;
+      }
+      if(tecla == 'w'){
+        pos[0].y--;
+      }
+      verificar();
+
     }
 
-
-
-    Snake();
+  Snake();
 
   }
 
-    Sleep(30);
+
+  if(!game){
+    system("cls");
+    printf("\n\n\n\n");
+    printf("PERDISTE\n");
+    system("PAUSE");
+  }
 
 
 }
 
 
 void limpiarGotoxy(){
-  for(i=0;i<50;i++){
-    for(j=0;j<25;j++){
+  for(i=1;i<50;i++){
+    for(j=1;j<25;j++){
       gotoxy(i,j);
       printf(" ");
     }
@@ -101,8 +105,69 @@ void limpiarGotoxy(){
 
 
 void Snake (){
-  for(i = 0 ;i < length+1 ; i++){
-    gotoxy(pos[i].x,pos[i].y);
-    printf("%c",serpiente[i]);
+
+  for(i=0;i<length;i++){
+    gotoxy(pos[i].x,pos[i].y);printf("%c",serpiente[i]);
+
   }
+}
+
+
+void alimento(){
+
+    srand(time(NULL));
+    numX=1+rand()%((48+1)-1);
+    numY=1+rand()%((23+1)-1);
+
+}
+
+
+
+void verificar(){
+
+    if(pos[0].x==numX && pos[0].y==numY){
+        serpiente[length]='*';
+        length++;
+        alimento();
+    }
+    for(i=1;i<length;i++){
+      if(pos[0].x == pos[i].x && pos[0].y == pos[i].y){
+        game = 0;
+      }
+    }
+  //colision con tablero
+  for(i=0;i<25;i++){
+    if( (pos[0].x == 0 && pos[0].y == i) || (pos[0].x == 50 && pos[0].y == i)){
+      game = 0;
+    }
+  }
+  for(i=0;i<50;i++){
+    if( (pos[0].x == i && pos[0].y == 0 ) || (pos[0].x == i && pos[0].y == 25) ){
+      game = 0;
+    }
+  }
+
+
+
+}
+
+void tablero(){
+
+    for(i=0;i<25;i++){   // columna izquierda
+        gotoxy(0,i);printf("|");
+    }
+
+    for(i=0;i<50;i++){ // primera fila (ARRIBA)
+        gotoxy(i,0);printf("-");
+    }
+
+    for(i=0;i<25;i++){  //columna derecha
+        gotoxy(50,i);printf("|");
+    }
+
+    for(i=0;i<50;i++){  //ultima fila (ABAJO)
+        gotoxy(i,25);printf("-");
+    }
+
+
 }
