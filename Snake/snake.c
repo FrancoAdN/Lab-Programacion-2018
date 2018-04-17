@@ -125,7 +125,7 @@ void Snake (){
 
   }
 
-  gotoxy(0,26); printf("PUNTAJE : %d",puntos[hola].puntaje);
+  gotoxy(0,26); printf("PUNTAJE : %d",puntos[hola-1].puntaje);
 }
 
 
@@ -144,7 +144,7 @@ void verificar(){
     if(pos[0].x==numX && pos[0].y==numY){
         serpiente[length]='*';
         length++;
-        puntos[hola].puntaje += 100;
+        puntos[hola-1].puntaje += 100;
         alimento();
     }
     for(i=1;i<length;i++){
@@ -190,6 +190,7 @@ void tablero(){
 }
 
 void inicio(){
+  int k=0;
 
   printf("Bienvenido al snake\n\n\n");
   printf("Ingrese su nombre\n");
@@ -204,21 +205,32 @@ void inicio(){
 
   if(game == 2){
     printf("NOMBRE      PUNTOS      \n");
-    /*if(hola >= 2){
+    if(hola >= 2){
       for(i=0;i<hola-1;i++){
         for(j=i+1;j<hola;j++){
          if(puntos[j].puntaje>puntos[i].puntaje){
-          int aux=puntos[i].puntaje;
-          puntos[i].puntaje=puntos[j].puntaje;
-          puntos[j].puntaje=aux;
+            int aux=puntos[i].puntaje;
+            puntos[i].puntaje=puntos[j].puntaje;
+            puntos[j].puntaje=aux;
 
-          /*char nAux=puntos[i].nombre;
-          puntos[i].nombre=puntos[j].nombre;
-          puntos[j].nombre = nAux;*/
-         /*}
+            char nAux[20];
+            for(k=0;k<20;k++){
+              nAux[k]=puntos[i].nombre[k];
+            }
+            for(k=0;k<20;k++){
+              puntos[i].nombre[k]=puntos[j].nombre[k];
+            }
+            for(k=0;k<20;k++){
+              puntos[j].nombre[k]=nAux[k];
+            }
+            //=puntos[i].nombre;
+            /*puntos[i].nombre=puntos[j].nombre;
+            puntos[j].nombre = nAux;*/
+
+          }
         }
       }
-    }*/
+    }
     for(i=0;i<hola;i++){
       printf("%s   %d\n",puntos[i].nombre,puntos[i].puntaje);
     }
