@@ -1,70 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
-int *v;
-int n=-1,i,opcion;
+/*int *v,*newV;
+int n,i,opcion;
 
 void main() {
-
-
-  /*printf("\n Ingrese la cantidad de elementos del vector\n");
-  fflush(stdin);
-  scanf("%d",&n);
   v=malloc(n*sizeof(int));
-  for(i=0;i<n;i++){
-    printf("\n Ingrese el valor %d\n",i);
-    fflush(stdin);
-    scanf("%d",&v[i]);
-  }
-  for(i=0;i<n;i++){
-    printf("\n%d. %d\n",i,v[i]);
-  }
-
-  free(v);*/
   do{
-    printf("\n1. Para ingresar un numero\n");
-    printf("\n2. Para listar los numeros\n");
-    printf("\n3. Para salir\n");
+    printf("Ingrese una opcion\n");
+    fflush(stdin);
     scanf("%d",&opcion);
-    switch (opcion) {
-      case 1:
-      agregarPos();
-      free(v);
-        break;
-      case 2:
-          for(i=0;i<n;i++){
-            printf("\n%d. %d\n",i,v[i]);
-          }
-        break;
-      default:
-        if(opcion != 3){
-            printf("\nOpcion incorrecta\n");
-        }
-        break;
+    if(opcion == 1){
+      if(n>0){
+        newV=realloc(v,n*sizeof(int));
+        fflush(stdin);
+        scanf("%d",&v[n]);
+        n++;
+      }else{
+        scanf("%d",&v[n]);
+        n++;
+      }
     }
-  }while (opcion != 3);
-
-
-
-
-
+    if(opcion==2){
+        printf(" v[0] = %d\n",newV[0]);
+        //imprimir(newV,n);
+    }
+  }while(opcion != 3);
+  free(newV);
 }
-void agregarPos(){
-  int *aux;
-  aux=malloc(n*sizeof(int));
-  for(i=0;i<n;i++){
-    aux[i]=v[i];
-  }
-  free(v);
-  n++;
+
+void imprimir(int v[],int n){
+int aux;
+    for(i=0;i<n;i++){
+        aux+=v[i];
+    }
+    int media = aux / n;
+    printf("media: %d\n",media);
+}*/
+void main(){
+  int *v;
+  int i,n=3;
   v=malloc(n*sizeof(int));
-  for(i=0;i<n-1;i++){
-    v[i]=aux[i];
+  v[0]=23;
+  v[1]=56;
+  v[2]=454;
+  for(i=0;i<n;i++){
+    printf("%d. %d\n",i,v[i]);
   }
-  free(aux);
-  printf("Ingrese la posicion %d\n",n);
-  fflush(stdin);
-  scanf("%d",&v[n]);
-  printf("%d. %d\n",n,v[n]);
-
-
 }
