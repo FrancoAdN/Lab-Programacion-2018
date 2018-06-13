@@ -1,17 +1,15 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <String.h>
 #include <ctype.h>
 
+
+
 char opcion;
-char alumnos[100][20];
-int len = 0,i = 0,edit=0;
-
-
+char alumnos[20][20];
+int len = 0,i;
 void main(){
-   /* printf("ingrese un nombre\n");
-    fflush(stdin);
-    gets(nombre);
-    puts(nombre);*/
+
 
 
     printf("Bienvenido al programa \n\n");
@@ -31,27 +29,29 @@ void main(){
         opcion = toupper(opcion);
         switch(opcion){
             case 'A':
-                printf("\nIngrese el nombre completo del alumno\n");
-                fflush(stdin);
-                gets(alumnos[len]);
-                len++;
+                    printf("\nIngrese el nombre completo del alumno\n");
+                    fflush(stdin);
+                    gets(alumnos[len]);
+                    len++;
+
                 break;
             case 'B':
                 //FUNCION EDIT
-                editarAl();
+                editarAl(len,alumnos);
                 break;
             case 'C':
                 //FUNCION ELIMINAR
-                eliminarAlumno();
+                eliminarAlumno(len,alumnos);
                 break;
             case 'D':
-                imprimirVector();
+                imprimirVector(len,alumnos);
                 break;
             case 'E':
-                alfabetico(alumnos,len);
+                alfabetico(len,alumnos);
                 break;
             case 'F':
                 len=0;
+                printf("Se ha eliminado la lista\n");
                 break;
             default :
                 if(opcion != 'Z'){
@@ -67,16 +67,18 @@ void main(){
 
 }
 
-void imprimirVector(){
+void imprimirVector(/*int n, char v[]*/){
+    int i;
     for(i=0;i<len;i++){
-        printf("%d. ",i);
+        printf("%d.",i);
         puts(alumnos[i]);
 
     }
 }
 
-void editarAl(){
-
+void editarAl(/*int n,char v[]*/){
+    int edit;
+    //printf("n: %d , v[0]: %c \n",n,v[0]);
     imprimirVector();
     printf("\nIngrese el numero de alumno a editar\n");
     fflush(stdin);
@@ -87,28 +89,29 @@ void editarAl(){
 
 }
 
-void eliminarAlumno(){
+void eliminarAlumno(/*int n,char v[]*/){
     char aux[20];
+    int elim;
     imprimirVector();
     printf("\nIngrese el numero de alumno a eliminar\n");
     fflush(stdin);
-    scanf("%d",&edit);
+    scanf("%d",&elim);
     strcpy(aux,alumnos[len-1]);
-    strcpy(alumnos[len-1],alumnos[edit]);
-    strcpy(alumnos[edit],aux);
+    strcpy(alumnos[len-1],alumnos[elim]);
+    strcpy(alumnos[elim],aux);
     len--;
 
 }
 
-void alfabetico(char vector[],int size){
+void alfabetico(/*int n,char v[]*/){
     int i,j;
     char aux[20];
-    for(i=0;i<size-1;i++){
-        for(j=i+1;j<size;j++){
-            if(strcmp(vector[i],vector[j])>0){
-                strcpy(aux,vector[i]);
-                strcpy(vector[i],vector[j]);
-                strcpy(vector[j],aux);
+    for(i=0;i<len-1;i++){
+        for(j=i+1;j<len;j++){
+            if(strcmp(alumnos[i],alumnos[j])>0){
+                strcpy(aux,alumnos[i]);
+                strcpy(alumnos[i],alumnos[j]);
+                strcpy(alumnos[j],aux);
             }
         }
     }

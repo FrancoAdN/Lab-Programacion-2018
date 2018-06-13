@@ -8,11 +8,12 @@ struct al {
     int telefono;
 };
 
-struct al alumnos[100];
+char opcion;
+struct al alumnos[20];
 int len = 0;
 
 void main(){
-        char opcion;
+
 
 
         do{
@@ -46,11 +47,13 @@ void main(){
                 break;
             case 'E':
                 //Funcion alf
-                alfabetico(alumnos,len);
+                alfabetico();
                 printf("opcion E");
                 break;
             case 'F':
+                printf("Se ha eliminado la lista\n");
                 len=0;
+                getch();
                 break;
             default :
                 if(opcion != 'Z'){
@@ -68,19 +71,22 @@ void main(){
 
 
 void ingresarAlumno(){
-    printf("\n Ingrese el nombre completo del alumno \n");
+
+    printf("\nIngrese el nombre completo del alumno \n");
     fflush(stdin);
     gets(alumnos[len].nombre);
-    printf("\n Ingrese la edad del alumno \n");
+    printf("\nIngrese la edad del alumno \n");
     fflush(stdin);
     scanf("%d",&alumnos[len].edad);
-    printf("\n Ingrese el email del alumno \n");
+    printf("\nIngrese el email del alumno \n");
     fflush(stdin);
     gets(alumnos[len].email);
-    printf("\n Ingrese el numero de telefono del alumno\n");
+    printf("\nIngrese el numero de telefono del alumno\n");
     fflush(stdin);
     scanf("%d",&alumnos[len].telefono);
     len++;
+
+
 }
 
 void imprimirAlumnos(){
@@ -161,27 +167,20 @@ void eliminarAlumno(){
     len--;
 }
 
-void alfabetico(struct al vector[],int size){
+void alfabetico(){
     int i,j;
     struct al aux;
-    for(i=0;i<size-1;i++){
-        for(j=i+1;j<size;j++){
-            if(strcmp(vector[i].nombre,vector[j].nombre)>0){
-                aux=vector[i];
-                vector[i]=vector[j];
-                vector[j]=aux;
+    for(i=0;i<len-1;i++){
+        for(j=i+1;j<len;j++){
+            if(strcmp(alumnos[i].nombre,alumnos[j].nombre)>0){
+                aux=alumnos[i];
+                alumnos[i]=alumnos[j];
+                alumnos[j]=aux;
             }
         }
     }
 
-    for(i=0;i<len;i++){
-        printf("\n%d. nombre:",i);
-        puts(vector[i].nombre);
-        printf("edad: %d\n",vector[i].edad);
-        printf("email: ");
-        puts(vector[i].email);
-        printf("telefono: %d\n",vector[i].telefono);
-    }
+    imprimirAlumnos();
     getch();
 
 }
