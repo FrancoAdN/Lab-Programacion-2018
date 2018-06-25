@@ -1,0 +1,5 @@
+;no ingresar esta linea
+comienzo de ingreso
+lab
+#progrmacion2018
+*fin de ingreso

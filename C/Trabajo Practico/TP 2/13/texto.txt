@@ -1,0 +1,4 @@
+tres
+lineanumero dos
+cuatro cinco seis
+laboratorio de programacion

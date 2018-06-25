@@ -1,0 +1,10 @@
+esta no
+/si
+//tambien
+no
+#esta linea se muestra
+esta # no
+otra que no
+/////si
+#tambien va
+negativo
