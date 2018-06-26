@@ -30,6 +30,10 @@ void obtenerDatos(){
       }
     }
     fclose(fp);
-    for(int i=0;i<n;i++)
-      puts(mediciones[i]);
+    for(int i=0;i<n/20;i++){
+     for(int j=0;j<20;j++)
+        printf("%d. %s\n",i,mediciones[j]);
+     printf("\n");
+    }
+
 }

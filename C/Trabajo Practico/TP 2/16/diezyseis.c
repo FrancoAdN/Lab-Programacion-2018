@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 struct tem {
+  char hora[8];
   float temp;
   char fecha[10];
-  char hora[10];
 }medir[100];
+char hora[100][10];
 int n=-1,i=0,a=0;
 int opcion;
 char name[20];
@@ -25,28 +26,31 @@ void main(){
     scanf("%d",&opcion);
     switch(opcion){
       case 1:
-        system("cls");
         n++;
+        system("cls");
         printf("Ingrese la temperatura (formato: ff.ff)\n");
         fflush(stdin);
         scanf("%f",&medir[n].temp);
-        printf("Ingrese la fecha de la medicion (formato: yyyy-mm-dd)\n");
+        printf("Ingrese la fecha (formato: yyyy-mm-dd)\n");
         fflush(stdin);
         gets(medir[n].fecha);
-        printf("Ingrese la hora de la medicion (formato: hh.mm.ss)\n");
+        printf("Ingrese la hora (formato: hh.mm.ss)\n");
         fflush(stdin);
         gets(medir[n].hora);
         break;
+
       case 2:
         system("cls");
         for(i=0;i<=n;i++){
-          printf("%d. Temperatura: %.2f\n",i,medir[i].temp);
-          printf("%d. Fecha: %s\n",i,medir[i].fecha);
-          printf("%d. Hora: %s\n",i,medir[i].hora);
-          printf("\n");
+            printf("%.2f\n",medir[i].temp);
+            puts(medir[i].fecha);
+            puts(medir[i].hora);
         }
         break;
       case 3:
+        fp=fopen("arch.txt","r+");
+        fputs(name,fp);
+        fclose(fp);
         fp=fopen(name,"a+t");
         if(a==0)
             fprintf(fp, "TEMPERATURA;FECHA;HORA\n");

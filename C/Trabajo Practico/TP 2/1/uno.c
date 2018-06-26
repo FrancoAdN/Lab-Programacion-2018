@@ -6,9 +6,9 @@ int fIng=0;
 int n=0,cont=0;
 char frases[20][50];
 char espacio=32;
-char finIngreso=81;
+char finIngreso=128;
 
-// $Q == 81;
+
 
 FILE *fp;
 
