@@ -1,0 +1,52 @@
+<h2>Bienvenido <%= nombre %></h2>
+<a href="/mis-pedidos">Mis pedidos</a>
+<% for(let i = 0; i < productos.length; i++) { %>
+    <div style="border:1px solid black;">
+        <img src="<%= productos[i].Imagen %>" width="200px">
+        <p><%= productos[i].Nombre%></p>
+        <p>Precio: <%= productos[i].Precio %>$</p>
+        <label for="talle">Talle:</label>
+        <select name="talle" class="talle">
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+        </select>
+        <input type="number" name="producto" value="<%= productos[i].Id%>" class="id" hidden>
+        <label for="cantidad">Cantidad: </label>
+        <input type="number" name="cantidad" id="" value="0" min="0" class="cant">
+    </div><br>
+<% } %>
+
+<button onclick="hacerPedido()">Hacer pedido</button>
+<script>
+    function hacerPedido(){
+        const talle = document.getElementsByClassName("talle");
+        const id = document.getElementsByClassName("id");
+        const cant = document.getElementsByClassName("cant");
+
+        let jsonpost = [];
+        for(let i = 0; i < cant.length; i++){
+            if(parseInt(cant[i].value) != 0){
+                let js = {
+                    id: id[i].value,
+                    talle: talle[i].value,
+                    cant: cant[i].value
+                };
+                jsonpost.push(js);
+            }
+        }
+
+        if(jsonpost.length != 0){
+            fetch('/pedido', {
+            method: 'POST',
+            redirect: 'follow', 
+            body: JSON.stringify(jsonpost),
+            headers:{'Content-Type': 'application/json'}})
+            .then(res => window.location.href = res.url)
+            .catch(error => console.error('Error:', error))
+        }
+
+    }
+</script>
+
